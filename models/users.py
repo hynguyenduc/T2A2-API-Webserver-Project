@@ -8,4 +8,16 @@ class User(db.Model):
     # username = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
     admin = db.Column(db.Boolean, default=False)
+    characters = db.relationship(
+        'Character', 
+        backref='user', 
+        cascade='all, delete'
+        )
+    campaigns = db.relationship(
+        'Campaign',
+        back_populates='user', 
+        cascade='all, delete'
+    )
+
+
 

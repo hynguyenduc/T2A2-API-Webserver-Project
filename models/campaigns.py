@@ -7,3 +7,11 @@ class Campaign(db.Model):
     name = db.Column(db.String(), nullable=False)
     date_created = db.Column(db.Date())
     description = db.Column(db.String())
+    user = db.relationship(
+        'User', 
+        back_populates='campaigns'
+    )
+    characters = db.relationship(
+        'Characters', 
+        back_populates='characters'
+    )

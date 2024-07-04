@@ -14,5 +14,12 @@ class Character(db.Model):
     int_stat = db.Column(db.Integer(), nullable=False)
     wis_stat = db.Column(db.Integer(), nullable=False)
     cha_stat = db.Column(db.Integer(), nullable=False)
-
+    user = db.relationship(
+        'User',
+        back_populates='characters'
+    )
+    campaigns = db.relationship(
+        'Campaigns', 
+        back_populates='characters'
+    )
 
