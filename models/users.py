@@ -1,7 +1,7 @@
 from main import db
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), nullable=False, unique=True)
@@ -9,14 +9,14 @@ class User(db.Model):
     password = db.Column(db.String(), nullable=False)
     admin = db.Column(db.Boolean, default=False)
     characters = db.relationship(
-        'Character', 
-        backref='user', 
-        cascade='all, delete'
+        "Character", 
+        backref="user", 
+        cascade="all, delete"
         )
     campaigns = db.relationship(
-        'Campaign',
-        back_populates='user', 
-        cascade='all, delete'
+        "Campaign",
+        back_populates="user", 
+        cascade="all, delete"
     )
 
 

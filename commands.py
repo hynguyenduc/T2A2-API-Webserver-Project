@@ -38,7 +38,7 @@ def auto_generate():
         name = "sample campaign 1",
         description = "",
         date_created = date.today(),
-        # user_id = user1.id
+        user_id = user1.id
 
     )
     # Add the object as a new row to the table
@@ -58,7 +58,8 @@ def auto_generate():
         wis_stat = 8,
         cha_stat = 10,
         date = date.today(),
-        # user = user1
+        user_id = user1.id,
+        campaign = campaign1
  
     )
     # Add the object as a new row to the table
@@ -98,7 +99,7 @@ def seed_db():
         name = "sample campaign 1",
         description = "",
         date_created = date.today(),
-        # user_id = user1.id
+        user_id = user1.id
 
     )
     # Add the object as a new row to the table
@@ -119,6 +120,7 @@ def seed_db():
         cha_stat = 10,
         date = date.today(),
         # user = user1
+        user_id = user1.id
  
     )
     # Add the object as a new row to the table

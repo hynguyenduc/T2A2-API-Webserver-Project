@@ -7,7 +7,7 @@ class UserSchema(ma.Schema):
         fields = ['id', 'email', 'password', 'admin', 'campaign', 'character']
         load_only = ['password', 'admin']
     password = fields.String(validate=Length(min=8, error='Password must be at least 8 characters long'), required=True)
-    characters = fields.List(fields.Nested("CharacterSchema", exclude=("user",))) 
+    # characters = fields.List(fields.Nested("CharacterSchema", exclude=("user",))) 
     campaigns = fields.List(fields.Nested("CampaignSchema", exclude=("user",)))
     
 user_schema = UserSchema()

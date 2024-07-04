@@ -7,76 +7,79 @@ from main import db
 from models.campaigns import Campaign
 from models.users import User
 from models.characters import Character
-from schemas.campaign_schema import campaign_schema, campaigns_schema
-from schemas.user_schema import users_schema
-from schemas.character_schema import character_schema, characters_schema
+from schema.campaign_schema import campaign_schema, campaigns_schema
+from schema.user_schema import users_schema
+from schema.character_schema import character_schema, characters_schema
 
-cards = Blueprint('campaigns', __name__, url_prefix="/campaigns")
+campaigns = Blueprint('campaigns', __name__, url_prefix="/campaigns")
 
 # Error handling 
-# @cards.errorhandler(KeyError)
+# @campaigns.errorhandler(KeyError)
 # def key_error(e):
 #     return jsonify({'error': f'The field {e} is required'}), 400
 
-# @cards.errorhandler(BadRequest)
+# @campaigns.errorhandler(BadRequest)
 # def default_error(e):
 #     return jsonify({'error': e.description}), 400
 
-# @cards.errorhandler(ValidationError)
+# @campaigns.errorhandler(ValidationError)
 # def validation_error(e):
 #     return jsonify(e.messages), 400
 
-# The GET routes endpoint
-@cards.route("/<int:id>/", methods=["GET"])
-def get_card(id):
+# The GET route endpoints
+
+#GET one campaign
+@campaigns.route("/<int:id>/", methods=["GET"])
+def get_campaign(id):
     stmt = db.select(Campaign).filter_by(id=id)
-    card = db.session.scalar(stmt)
+    campaign = db.session.scalar(stmt)
     #return an error if the card doesn't exist
-    if not card:
-        return abort(400, description= "Card does not exist")
-    # Convert the cards from the database into a JSON format and store them in result
-    result = campaign_schema.dump(card)
+    if not campaign:
+        return abort(400, description= "Campaign does not exist")
+    # Convert the campaigns from the database into a JSON format and store them in result
+    result = campaign_schema.dump(campaign)
     # return the data in JSON format
     return jsonify(result)
 
-@cards.route("/", methods=["GET"])
-def get_cards():
-    # get all the cards from the database table
+#GET all campaigns
+@campaigns.route("/", methods=["GET"])
+def get_campaigns():
+    # get all the campaigns from the database table
     stmt = db.select(Card)
-    cards_list = db.session.scalars(stmt)
-    # Convert the cards from the database into a JSON format and store them in result
-    result = cards_schema.dump(cards_list)
+    campaigns_list = db.session.scalars(stmt)
+    # Convert the campaigns from the database into a JSON format and store them in result
+    result = campaigns_schema.dump(campaigns_list)
     # return the data in JSON format
     return jsonify(result)
-    #return "List of cards retrieved"
+    #return "List of campaigns retrieved"
 
-# @cards.route("/search", methods=["GET"])
-# def search_cards():
+# @campaigns.route("/search", methods=["GET"])
+# def search_campaigns():
 #     # return the content of the query string
 #     return request.query_string
 
-# @cards.route("/search", methods=["GET"])
-# def search_cards():
+# @campaigns.route("/search", methods=["GET"])
+# def search_campaigns():
 #     # return the content of the query string
 #     return request.args.get('priority')
 
-@cards.route("/search", methods=["GET"])
-def search_cards():
+@campaigns.route("/search", methods=["GET"])
+def search_campaigns():
     # create an empty list in case the query string is not valid
-    cards_list = []
+    campaigns_list = []
 
     if request.args.get('priority'):
         stmt = db.select(Card).filter_by(priority= request.args.get('priority'))
-        cards_list = db.session.scalars(stmt)
+        campaigns_list = db.session.scalars(stmt)
     elif request.args.get('status'):
         stmt = db.select(Card).filter_by(status= request.args.get('status'))
-        cards_list = db.session.scalars(stmt)
+        campaigns_list = db.session.scalars(stmt)
 
-    result = cards_schema.dump(cards_list)
+    result = campaigns_schema.dump(campaigns_list)
     # return the data in JSON format
     return jsonify(result)
 
-@cards.route("/users", methods=["GET"])
+@campaigns.route("/users", methods=["GET"])
 def get_users():
     # get all the users from the database table
     stmt = db.select(User)
@@ -87,7 +90,7 @@ def get_users():
     return jsonify(result)
 
 # The POST route endpoint
-@cards.route("/<int:id>/", methods=["PUT"])
+@campaigns.route("/<int:id>/", methods=["PUT"])
 @jwt_required()
 def update_card(id):
     # #Create a new card
@@ -123,7 +126,7 @@ def update_card(id):
     return jsonify(card_schema.dump(card))
 
 # Create a new card
-@cards.route("/", methods=["POST"])
+@campaigns.route("/", methods=["POST"])
 @jwt_required()
 def create_card():
     #Create a new card
@@ -150,7 +153,7 @@ def create_card():
     #return "Card created"
 
 #POST a new comment
-@cards.route("/<int:id>/comments", methods=["POST"])
+@campaigns.route("/<int:id>/comments", methods=["POST"])
 # logged in user required
 @jwt_required()
 # Card id required to assign the comment to a car
@@ -188,7 +191,7 @@ def post_comment(id):
 
 
 # Finally, we round out our CRUD resource with a DELETE method
-@cards.route("/<int:id>/", methods=["DELETE"])
+@campaigns.route("/<int:id>/", methods=["DELETE"])
 @jwt_required()
 def delete_card(id):
     #get the user id invoking get_jwt_identity

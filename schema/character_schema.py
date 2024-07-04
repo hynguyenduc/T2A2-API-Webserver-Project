@@ -9,9 +9,9 @@ VALID_STATS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 class CharacterSchema(ma.Schema):
     class Meta:
         
-        fields = ['id', 'user', 'name', 'race', 'char_class', 'date_created', 'str_stat', 'dex_stat', 'con_stat', 'int_stat', 'wis_stat', 'cha_stat']
+        fields = ['id', 'Creator', 'name', 'race', 'char_class', 'date_created', 'str_stat', 'dex_stat', 'con_stat', 'int_stat', 'wis_stat', 'cha_stat']
     
-    user = fields.Nested('UserSchema',  only=('email',))
+    Creator = fields.Nested('UserSchema',  only=('email',))
 
     race = fields.String(required=True, validate=OneOf(VALID_RACES))
     char_class = fields.String(required=True, validate=OneOf(VALID_CLASSES))

@@ -2,7 +2,7 @@ from datetime import timedelta
 from flask import Blueprint, jsonify, request, abort
 from flask_jwt_extended import create_access_token
 from main import db, bcrypt
-from schemas.user_schema import user_schema, users_schema
+from schema.user_schema import user_schema, users_schema
 from models.users import User
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")

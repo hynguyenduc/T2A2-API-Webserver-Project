@@ -17,6 +17,7 @@ def create_app():
 
     # app configuration
     app.config.from_object("config.app_config")
+    app.json.sort_keys = False
 
     # Database object that allows use of SQLAlchemy ORM
     db.init_app(app)
