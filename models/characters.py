@@ -5,8 +5,9 @@ class Character(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
+    race = db.Column(db.String(), nullable=False)
+    char_class = db.Column(db.String(), nullable=False)
     date_created = db.Column(db.Date())
-    description = db.Column(db.String())
     str_stat = db.Column(db.Integer(), nullable=False)
     dex_stat = db.Column(db.Integer(), nullable=False)
     con_stat = db.Column(db.Integer(), nullable=False)

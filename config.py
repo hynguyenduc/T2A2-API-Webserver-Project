@@ -8,7 +8,7 @@ class Config(object):
         # access to .env and get the value of DATABASE_URL, the variable name can be any but needs to match
         value = os.environ.get("DB_URI")
         if not value:
-            raise ValueError("DATABASE_URL is not set")
+            raise ValueError("DATABASE_URI is not set")
         return value
 
 class DevelopmentConfig(Config):

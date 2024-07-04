@@ -28,4 +28,6 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
+    # commands
+
     return app
