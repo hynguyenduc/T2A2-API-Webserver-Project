@@ -106,7 +106,7 @@ User will represent the account user, therefore required authentication and auth
 Users can then create campaigns that host characters. Campaigns simply need name of the campaign, a description of the adventure and a date will be generated on creation. It shares a one to many relationship with user, therefore need a foreign key from user_id. Characters is the last parameter. It contains name, race and class of the character and a date will be generated on creation. A character is attached to a campaign and user so it requires a foreign key from user_id and campaign_id. This means when a user is deleted, both campaign details and character details will be as well. In addition, if campaigns are deleted, only the character details will be removed as well, to prevent orphan data.
 
 ## R7
-
+Some changes to the initial design include spreading out the stats into individual values so that they could be added a table. My understanding is that characters are usually locked to a specific campaign once the campaign has started 
 
 ## R8
 Explain each endpoint, description is the minimum, must also give example, such as with sent header, sent body, sent url, with such restful parameters, sent request, what are the given responses

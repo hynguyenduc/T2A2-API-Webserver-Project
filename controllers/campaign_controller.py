@@ -15,20 +15,30 @@ from schema.character_schema import character_schema
 campaigns = Blueprint('campaigns', __name__, url_prefix="/campaigns")
 
 # Error handling 
-# @campaigns.errorhandler(KeyError)
-# def key_error(e):
-#     return jsonify({'error': f'The field {e} is required'}), 400
+@campaigns.errorhandler(KeyError)
+def key_error(e):
+    return jsonify({'error': f'The field {e} is required'}), 400
+# @app.errorhandler(KeyError)
+# def missing_key(err):
+#     return {"error": f"Missing field: {str(err)}"}, 400
 
-# @campaigns.errorhandler(BadRequest)
-# def default_error(e):
-#     return jsonify({'error': e.description}), 400
+@campaigns.errorhandler(BadRequest)
+def default_error(e):
+    return jsonify({'error': e.description}), 400
 
-# @campaigns.errorhandler(ValidationError)
-# def validation_error(e):
-#     return jsonify(e.messages), 400
+@campaigns.errorhandler(ValidationError)
+def validation_error(e):
+    return jsonify(e.messages), 400
+# @app.errorhandler(ValidationError)
+# def invalid_request(err):
+#     return {"error": vars(err)["messages"]}, 400
+
+@campaigns.errorhandler(405)
+@campaigns.errorhandler(404)
+def not_found(err):
+    return {"error": "Not Found"}, 404
 
 
-# !!!!!!!!!!!!!!!!!!!!
 # The GET routes endpoint
 @campaigns.route("/<int:id>/", methods=["GET"])
 def get_campaign(id):
@@ -42,7 +52,6 @@ def get_campaign(id):
     # return the data in JSON format
     return jsonify(result)
 
-# !!!!!!!!!!!!!!!!!!!!
 @campaigns.route("/", methods=["GET"])
 def get_campaigns():
     # get all the campaigns from the database table
@@ -54,7 +63,6 @@ def get_campaigns():
     return jsonify(result)
     #return "List of campaigns retrieved"
 
-# !!!!!!!!!!!!!!!!!
 @campaigns.route("/search", methods=["GET"])
 def search_campaigns():
     # create an empty list in case the query string is not valid
@@ -71,7 +79,6 @@ def search_campaigns():
     # return the data in JSON format
     return jsonify(result)
 
-# !!!!!!!!!!!!!!!!!!
 @campaigns.route("/users", methods=["GET"])
 def get_users():
     # get all the users from the database table
@@ -83,7 +90,6 @@ def get_users():
     return jsonify(result)
 
 # The POST route endpoint 
-#!!!!!!!!!!!!!!!!!!!!!
 @campaigns.route("/<int:id>/", methods=["PUT"])
 @jwt_required()
 def update_campaign(id):
@@ -117,7 +123,7 @@ def update_campaign(id):
     #return the campaign in the response
     return jsonify(campaign_schema.dump(campaign))
 
-# Create a new campaign !!!!!!!!!!!!!!!!!!!!!!
+# Create a new campaign 
 @campaigns.route("/", methods=["POST"])
 @jwt_required()
 def create_campaign():
@@ -140,7 +146,6 @@ def create_campaign():
     return jsonify(campaign_schema.dump(new_campaign))
     #return "Campaign created"
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!
 #POST a new character
 @campaigns.route("/<int:id>/characters", methods=["POST"])
 # logged in user required
@@ -176,6 +181,7 @@ def post_character(id):
     new_character.int_stat = character_fields["int_stat"]
     new_character.wis_stat = character_fields["wis_stat"]
     new_character.cha_stat = character_fields["cha_stat"]
+    new_character.date = date.today()
     # Use the campaign gotten by the id of the route
     new_character.campaign = campaign
     # Use that id to set the ownership of the campaign
@@ -186,8 +192,7 @@ def post_character(id):
     #return the campaign in the response
     return jsonify(campaign_schema.dump(campaign))
 
-# !!!!!!!!!
-# Finally, we round out our CRUD resource with a DELETE method
+# DELETE method
 @campaigns.route("/<int:id>/", methods=["DELETE"])
 @jwt_required()
 def delete_campaign(id):
@@ -213,3 +218,4 @@ def delete_campaign(id):
     db.session.commit()
     #return the campaign in the response
     return "Campaign Deleted"
+
