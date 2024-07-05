@@ -11,8 +11,13 @@ class CharacterSchema(ma.Schema):
         ordered = True
         # Fields to expose
         fields = ("id", 'user', 'name', 'race', 'char_class', 'date', 'str_stat', 'dex_stat', 'con_stat', 'int_stat', 'wis_stat', 'cha_stat')
+    
     user =  fields.Nested("UserSchema", only=("email",)) 
+    
+    name = fields.String(required=True, validate=Length(min=1, max=100))
+    
     race = fields.String(required=True, validate=OneOf(VALID_RACES))
+    
     char_class = fields.String(required=True, validate=OneOf(VALID_CLASSES))
      
     str_stat = fields.Integer(required=True, validate=And(OneOf(VALID_STATS, error='Only numbers between 1-20')))

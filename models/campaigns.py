@@ -6,8 +6,8 @@ class Campaign(db.Model):
     # Set the primary key
     id = db.Column(db.Integer,primary_key=True)
     # Add the rest of the attributes. 
-    name = db.Column(db.String(), nullable=False)
-    description = db.Column(db.String())
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(300))
     date = db.Column(db.Date())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user = db.relationship(
