@@ -1,16 +1,41 @@
 from datetime import timedelta
 from flask import Blueprint, jsonify, request, abort
 from flask_jwt_extended import create_access_token
+from marshmallow.exceptions import ValidationError
+from werkzeug.exceptions import BadRequest
 from main import db, bcrypt
-from schema.user_schema import user_schema, users_schema
+from schema.user_schema import user_schema
 from models.users import User
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
+@auth.errorhandler(KeyError)
+def key_error(e):
+    return jsonify({'error': f'The field {e} is required'}), 400
+# @app.errorhandler(KeyError)
+# def missing_key(err):
+#     return {"error": f"Missing field: {str(err)}"}, 400
+
+@auth.errorhandler(BadRequest)
+def default_error(e):
+    return jsonify({'error': e.description}), 400
+
+@auth.errorhandler(ValidationError)
+def validation_error(e):
+    return jsonify(e.messages), 400
+# @app.errorhandler(ValidationError)
+# def invalid_request(err):
+#     return {"error": vars(err)["messages"]}, 400
+
+@auth.errorhandler(405)
+@auth.errorhandler(404)
+def not_found(err):
+    return {"error": "Not Found"}, 404
+
 @auth.route("/register", methods=["POST"])
 def auth_register():
     # The request data will be loaded in a user_schema converted to JSON. request needs to be imported from
-    user_fields = user_schema.load(request.json)
+    user_fields = user_schema.load(request.json, unknown="exclude")
     # find the user
     stmt = db.select(User).filter_by(email=user_fields["email"])
     user = db.session.scalar(stmt)
@@ -41,7 +66,7 @@ def auth_register():
 @auth.route("/login", methods=["POST"])
 def auth_login():
     #get the user data from the request
-    user_fields = user_schema.load(request.json)
+    user_fields = user_schema.load(request.json, unknown="exclude")
     #find the user in the database by email
     stmt = db.select(User).filter_by(email=user_fields["email"])
     user = db.session.scalar(stmt)

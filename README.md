@@ -15,16 +15,22 @@ My proposed solution is a web database that can hold all relevant information fo
 Tasks are tracked with trello. The workload will be separated by sections and will be placed into 3 possible conditions: Initially tasks start in their respective section, then progress to a 'Working on' column then move onto a 'Finished' column. There was also daily stand-up reports on the class discord. 
 ##### Planning Phase
 ![](docs/Untitled1.png)
+- Mainly listing out the task to do
 ##### Day 1
 ![](docs/Untitled2.png)
+- Start with initializing the project, setting it up before any real coding
 ##### Day 2
 ![](docs/Untitled3.png)
+- Create the models and the schema coding and planning how they interact with each other
 ##### Day 3
 ![](docs/Untitled4.png)
+- Testing the models and schema with a cli command that should create the tables and fill them automatically with sample data
 ##### Day 4
 ![](docs/Untitled5.png)
+- Creating the query routes
 ##### Day 5
 ![](docs/Untitled6.png)
+- Creating error handlers to handle errors I have encountered and finishing off the documentation
 
 ## R3
 3rd party python libraries and dependencies would include
@@ -106,24 +112,57 @@ User will represent the account user, therefore required authentication and auth
 Users can then create campaigns that host characters. Campaigns simply need name of the campaign, a description of the adventure and a date will be generated on creation. It shares a one to many relationship with user, therefore need a foreign key from user_id. Characters is the last parameter. It contains name, race and class of the character and a date will be generated on creation. A character is attached to a campaign and user so it requires a foreign key from user_id and campaign_id. This means when a user is deleted, both campaign details and character details will be as well. In addition, if campaigns are deleted, only the character details will be removed as well, to prevent orphan data.
 
 ## R7
-Some changes to the initial design include spreading out the stats into individual values so that they could be added a table. My understanding is that characters are usually locked to a specific campaign once the campaign has started 
+Some changes to the initial design include spreading out the stats into individual values so that they could be added a table. Users are the root model to which users can create their own campaigns. Afterwards, the campaign creator and the other users can add their player characters to any particular campaign. It was done this way for ease of coding the delete methods, as a deleted User would removed all the campaigns they created and were dungeon-mastering for and therefore the related player character data could be removed as well. 
 
 ## R8
-Explain each endpoint, description is the minimum, must also give example, such as with sent header, sent body, sent url, with such restful parameters, sent request, what are the given responses
-Http verb
-Path or route
-Body / header: includes JWT token
-Response
+#### Register user/account 
+![auth1](docs/auth_post1.png)
+![return1](docs/re_auth_post1.png)
+- The route is "/auth/register" and it used a GET request to register new users
+- Takes a request that contains email and password, while ignoring any other parameters
+- It returns the request with an encrypted JWT 'token' for authenticating requests that need it, essentially logging in the new user after they make a new account
 
-Need to justify why you deviated from ERD, if you ever did
-Normalization process (3rd normal form)
-Use Alchemy
-Error handling
+#### Login with existing users
+![auth2](docs/auth_post2.png)
+![return2](docs/re_auth_post2.png)
+- The route is "/auth/login" and this one alse uses a GET request to login existing users
+- Takes a request that contains email and password, while ignoring any other parameters
+- It returns the request with an encrypted JWT 'token' for authenticating requests that need it
 
-Does not need to be a large database set
-At least 3 tables that are related 
-Need to get ideas signed off on
-All link out should include a link and screenshot
+#### Read data on existing campaigns
+![get1](docs/campaign_get1.png)
+![return3](docs/re_campaign_get1.png)
+- There are two routes: The route for requesting information on one campaign is "/campaigns/'corresponding id'/" and the route for requesting information on all campaigns on the database is "/campaigns/" and uses a GET request to retrieve read data presented in JSON format
+- Request is done in the url bar and will return campaign details such as name and description, including any attached player characters to that campaign
 
+#### Update info on existing campaigns
+![update1](docs/campaign_update1.png)
+![return4](docs/re_campaign_update1.png)
+- Route is "/campaigns/", but this one uses a PUT request to update the campaign details
+- Requires a JWT bearer token
+- Takes only relevant parameters, that being "name" and "description", and excludes anything else
+- Returning response is the campaign information with the updated campaign details
 
+#### Create a new campaign
+![createcam1](docs/campaign_create1.png)
+![return5](docs/re_campaign_create1.png)
+- Route is "/campaigns/", but this one uses a POST request to create a new campaign
+- Requires a JWT bearer token
+- Takes only relevant parameters, that being "name and description", and excludes any unknown ones.
+- Returning response would be the campaign information in JSON format
 
+#### Create a new character
+![createchar1](docs/campaign_create1.png)
+![return6](docs/re_campaign_create1.png)
+- Route is "/campaigns/'related campaign id'/characters and this is a POST request
+- Requires a JWT bearer token
+- Take relevant parameters such as "name", "race", character class as "char_class" and the 6 individual ability stats
+- Returning response contains the parameters the program has received and the email of the user who created it
+- Characters can be linked to any user's campaign and not exclusively campaigns they have created themselves
+
+#### Delete a campaign
+![del1](docs/campaign_del1.png)
+![return7](docs/re_campaign_del1.png)
+- Route is "/campaigns/'relevant campaign id'/" and takes in a DELETE request
+- Requires a JWT bearer token and admin authorization
+- Returns text: "Campaign deleted" otherwise errors will direct the user towards achieving that result

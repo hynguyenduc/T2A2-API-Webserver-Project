@@ -90,11 +90,12 @@ def get_users():
     return jsonify(result)
 
 # The POST route endpoint 
+#update campaign
 @campaigns.route("/<int:id>/", methods=["PUT"])
 @jwt_required()
 def update_campaign(id):
     # #Create a new campaign
-    campaign_fields = campaign_schema.load(request.json)
+    campaign_fields = campaign_schema.load(request.json, unknown="exclude")
 
     #get the user id invoking get_jwt_identity
     user_id = get_jwt_identity()
@@ -151,7 +152,7 @@ def create_campaign():
 # logged in user required
 @jwt_required()
 # Campaign id required to assign the character to a car
-def post_character(id):
+def create_character(id):
     # #Create a new character
     character_fields = character_schema.load(request.json)
 
