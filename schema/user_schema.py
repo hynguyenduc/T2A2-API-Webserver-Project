@@ -4,11 +4,12 @@ from main import ma
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'email', 'password', 'admin', 'campaign', 'character']
+        #model = User
+        fields = ['id', 'email', 'password', 'admin', 'campaigns']
         load_only = ['password', 'admin']
-    password = fields.String(validate=Length(min=8, error='Password must be at least 8 characters long'), required=True)
-    # characters = fields.List(fields.Nested("CharacterSchema", exclude=("user",))) 
+    #set the password's length to a minimum of 6 characters
+    password = fields.String(validate=Length(min=6, error='Password must be at least 8 characters long'), required=True)
     campaigns = fields.List(fields.Nested("CampaignSchema", exclude=("user",)))
-    
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)

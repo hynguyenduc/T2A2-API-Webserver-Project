@@ -7,7 +7,6 @@ from models.users import User
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
-
 @auth.route("/register", methods=["POST"])
 def auth_register():
     # The request data will be loaded in a user_schema converted to JSON. request needs to be imported from

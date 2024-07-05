@@ -5,19 +5,17 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), nullable=False, unique=True)
-    # username = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
-    admin = db.Column(db.Boolean, default=False)
-    characters = db.relationship(
-        "Character", 
-        backref="user", 
-        cascade="all, delete"
-        )
+    admin = db.Column(db.Boolean(), default=False)
     campaigns = db.relationship(
-        "Campaign",
+        "Campaign", 
         back_populates="user", 
         cascade="all, delete"
+        )
+    characters = db.relationship(
+        "Character",
+        back_populates="user",
+        cascade="all, delete"
     )
-
 
 
