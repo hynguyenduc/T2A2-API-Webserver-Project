@@ -12,7 +12,19 @@ Dnd was initially a pen and paper game that encouraged getting together with a g
 My proposed solution is a web database that can hold all relevant information for users, their campaigns and the character they have created
 
 ## R3
-Tasks are tracked with trello. The workload will be separated by sections and will be placed into 3 possible condtions: 'To do', 'Working on', 'Finished'
+Tasks are tracked with trello. The workload will be separated by sections and will be placed into 3 possible conditions: Initially tasks start in their respective section, then progress to a 'Working on' column then move onto a 'Finished' column. There was also daily stand-up reports on the class discord. 
+##### Planning Phase
+![](docs/Untitled1.png)
+##### Day 1
+![](docs/Untitled2.png)
+##### Day 2
+![](docs/Untitled3.png)
+##### Day 3
+![](docs/Untitled4.png)
+##### Day 4
+![](docs/Untitled5.png)
+##### Day 5
+![](docs/Untitled6.png)
 
 ## R4
 3rd party python libraries and dependencies would include
