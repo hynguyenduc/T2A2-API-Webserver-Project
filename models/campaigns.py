@@ -3,7 +3,7 @@ from main import db
 class Campaign(db.Model):
     # define the table name for the db
     __tablename__= "campaigns"
-    # Set the primary key, we need to define that each attribute is also a column in the db table, remember "db" is the object we created in the previous step.
+    # Set the primary key
     id = db.Column(db.Integer,primary_key=True)
     # Add the rest of the attributes. 
     name = db.Column(db.String(), nullable=False)

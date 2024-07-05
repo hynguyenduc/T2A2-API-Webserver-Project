@@ -11,7 +11,6 @@ bcrypt = Bcrypt()
 jwt = JWTManager()
 
 def create_app():
-    
     # Flask app object 
     app = Flask(__name__)
 
@@ -38,5 +37,9 @@ def create_app():
 
     for controller in registerable_controllers:
         app.register_blueprint(controller)
+
+    @app.route('/')
+    def hello():
+        return "Welcome to the Dnd Database"
 
     return app

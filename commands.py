@@ -1,15 +1,16 @@
-from main import db
+from datetime import date
 from flask import Blueprint
 from main import bcrypt
+from main import db
 from models.campaigns import Campaign
 from models.users import User
 from models.characters import Character
-from datetime import date
 
+
+# blueprint to enable modularity
 db_commands = Blueprint("db", __name__)
 
-# create app's cli command named create, then run it in the terminal as "flask db create", 
-# it will invoke create_db function
+# cli command named create to create tables for all models 
 @db_commands .cli.command("create")
 def create_db():
     db.create_all()
@@ -35,9 +36,9 @@ def seed_db():
 
     # create the card object
     campaign1 = Campaign(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
-        name = "Start the project",
-        description = "Stage 1, creating the database",
+        # set the attributes
+        name = "Example Campaign 1",
+        description = "Blank",
         date = date.today(),
         # method 1 of adding user_id
         user_id = user1.id
@@ -46,9 +47,9 @@ def seed_db():
     db.session.add(campaign1)
 
     campaign2 = Campaign(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
-        name = "SQLAlchemy and Marshmallow",
-        description = "Stage 2, integrate both modules in the project",
+        # set the attributes
+        name = "Example Campaign 2",
+        description = "",
         date = date.today(),
         # method 2 of adding user_id
         user = user1 
@@ -60,7 +61,7 @@ def seed_db():
     db.session.commit()
 
     character1 = Character(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
+        # set the attributes
         name = "Ogmire",
         race = "half-orc",
         char_class = "barbarian",
@@ -144,9 +145,9 @@ def generate_filler():
 
     # create the card object
     campaign1 = Campaign(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
-        name = "Start the project",
-        description = "Stage 1, creating the database",
+        # set the attributes
+        name = "Example Campaign 1",
+        description = "Blank",
         date = date.today(),
         # method 1 of adding user_id
         user_id = user1.id
@@ -155,9 +156,9 @@ def generate_filler():
     db.session.add(campaign1)
 
     campaign2 = Campaign(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
-        name = "SQLAlchemy and Marshmallow",
-        description = "Stage 2, integrate both modules in the project",
+        # set the attributes
+        name = "Example Campaign 2",
+        description = "",
         date = date.today(),
         # method 2 of adding user_id
         user = user1 
@@ -169,7 +170,7 @@ def generate_filler():
     db.session.commit()
 
     character1 = Character(
-        # set the attributes, not the id, SQLAlchemy will manage that for us
+        # set the attributes
         name = "Ogmire",
         race = "half-orc",
         char_class = "barbarian",
