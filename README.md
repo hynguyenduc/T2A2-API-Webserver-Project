@@ -4,6 +4,63 @@
 
 https://github.com/hynguyenduc/T2A2-API-Webserver-Project
 
+## R0
+#### Set up
+
+Make sure you have PostgreSQL installed, you can do so by following the relevant prompts on the embedded link: https://www.postgresql.org/download/
+
+Linux:
+
+    sudo -u postgresql psql
+
+Mac:
+
+    brew service postgresql start
+
+Now create a new database, you can name it anything, but we'll call it 'dnd_db':
+
+    CREATE database dnd_db;
+
+From here you will need to connect to the database by entering the following:
+
+    \c dnd_db; 
+
+Now that you are connected to the database, you can create a new user with any username and password, or you can follow the example provided:
+
+    create user dnddb_dev with password 'password123';
+
+Next grant all privileges to this user by entering the following:
+
+    grant all privileges on database dnd_db to dnddb_dev;
+
+From here you can exit postgresql by entering the following:
+
+    \q
+
+Now you will need to set up a virtual environment in the current working directory (assuming you are in a directory that you are happy with) by entering the following:
+
+    python3 -m venv .venv
+
+Activate the virtual environment by entering the following:
+
+    source venv/bin/activate
+
+Next you will need to install all of the dependencies listed in the requirements.txt by entering the following:
+
+    python3 -m pip install -r requirements.txt
+
+From here you will now be able to run the following command to create and fill the database table:
+
+    flask db autofill
+
+Make sure you 'activate' the .env file by removing the '.sample' extension and add the relevant information to the two empty lines. If you followed the example, it should look something like below:
+
+    JWT_SECRET_KEY= 'Insert your own key'
+
+    DB_URI= 'postgresql+psycopg2://dnddb_dev:password123@localhost:5432/dnd_db'
+
+Congratulations! You should have the database up and running
+
 ## R1
 #### The Problem 
 Dnd was initially a pen and paper game that encouraged getting together with a group of friends and exploring fantasy worlds. Now, with modern day technologies, we are able to connect with many different groups of people and discover new adventures. However, as we grow old it becomes harder to manage our time and maintain consistent connection with all the new friendships we started and campaigns we have embarked on. This can lead to lost character sheets or mixing up our characters.
