@@ -1,16 +1,20 @@
-Dnd Profile Manager
+# Dnd Profile Manager
 
-1.
-The Problem 
-Sometimes you want to spice things up and role-play another fantasy character. To see the same world with a fresh set of eyes or visit another one entirely! The issue is the maintenance: too many campaigns, too many character sheets, which can get lost and seemingly disappearing into the forgetten realms
+### Link to GitHub Repository
 
-The Solution
-A simple one stop database that can store multiple users and their related information such as character profiles and campaign information 
+https://github.com/hynguyenduc/T2A2-API-Webserver-Project
 
-2.
-Tasks are tracked with trello and allocated according
+## R2
+##### The Problem 
+Dnd was initially a pen and paper game that encouraged getting together with a group of friends and exploring fantasy worlds. Now, with modern day technologies, we are able to connect with many different groups of people and discover new adventures. However, as we grow old it becomes harder to manage our time and maintain consistent connection with all the new friendships we started and campaigns we have embarked on. This can lead to lost character sheets or mixing up our characters.
 
-3.
+##### The Solution
+My proposed solution is a web database that can hold all relevant information for users, their campaigns and the character they have created
+
+## R3
+Tasks are tracked with trello. The workload will be separated by sections and will be placed into 3 possible condtions: 'To do', 'Working on', 'Finished'
+
+## R4
 3rd party python libraries and dependencies would include
 Flask: Python library that serves as a "web framework": a tool for making web applications
 
@@ -45,7 +49,7 @@ Werkzeug: Sub-package of Flask used here to handle BadRequest errors.
 
 Flask-jwt-extended: Allows the web server to create and interpret a JWT token to allow for greater security with Bearer-type authentication (via encryption)
 
-4.
+## R5
 Postgres → describe this, pros and cons of that database system and relationship db systems in general
 PostgreSQL, as a robust relational database management system (RDBMS), shares many pros and cons typical of relational databases in general. Here’s a breakdown:
 Pros of PostgreSQL and RDBMS in General:
@@ -80,7 +84,7 @@ Cons of PostgreSQL and RDBMS in General:
 
 In summary, PostgreSQL and relational databases like it excel in providing strong consistency, data integrity, and a well-supported querying language. However, they may require careful planning for scalability and schema modifications, especially in large-scale or rapidly evolving systems. Choosing between PostgreSQL and other database systems often depends on specific project requirements, data structure, scalability needs, and the development team's expertise.
 
-5.
+## R6
 SQLAlchemy → describe, features, what it does, and how you’re going to use it 
 SQLAlchemy is a popular Python SQL toolkit and Object-Relational Mapping (ORM) library that provides a flexible and high-level interface for interacting with relational databases. Here’s an overview of what SQLAlchemy does and its key features:
 What SQLAlchemy Does:
@@ -122,13 +126,13 @@ Key Features of SQLAlchemy:
 
 Overall, SQLAlchemy simplifies database interactions in Python applications by providing a powerful ORM, SQL expression language, and tools for database management and query optimization. Its flexibility and extensive feature set make it a popular choice for developers working with relational databases in Python projects.
 
-6.
+## R7
 Focus on db design before coding is done, just initial db design (some extra bit i missed) → pure design, no reference to code, python, sql, alchemy, etc 
 
-7.
+## R8
 Why did you structure that way, ie. why are the ‘relationships’ structured that way? Does it make it easier to code something if structured that way? Ie. explain the models that sit on top of the design (alchemy models) → more on alchemy models, relationships and the coding
 
-8.
+## R9
 Explain each endpoint, description is the minimum, must also give example, such as with sent header, sent body, sent url, with such restful parameters, sent request, what are the given responses
 Http verb
 Path or route
